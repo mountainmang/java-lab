@@ -1,0 +1,25 @@
+name: Java Container Security Scan
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t java-lab:vulnerable .
+
+      - name: Scan Docker image with Trivy
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: java-lab:vulnerable
+          scan-type: image
+          format: table
+          severity: CRITICAL
+          exit-code: '1'
