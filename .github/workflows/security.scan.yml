@@ -1,25 +1,19 @@
-name: Java Container Security Scan
+name: My First GitHub Action
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  security-scan:
+  hello:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Say hello
+        run: echo "Hello! GitHub Actions is working!"
 
-      - name: Build Docker image
-        run: docker build -t java-lab:vulnerable .
+      - name: Show Java version
+        run: java -version
 
-      - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: java-lab:vulnerable
-          scan-type: image
-          format: table
-          severity: CRITICAL
-          exit-code: '1'
+      - name: Finish
+        run: echo "My first GitHub Actions workflow completed successfully!"
